@@ -3,7 +3,7 @@ public class LinkedList {
     private Node current;
 
     LinkedList(String path){
-
+        hjgj
     }
 }
     
