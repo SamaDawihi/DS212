@@ -12,8 +12,14 @@ class Node {
         this.position = position;
         this.length = length;
     }
+    boolean equals(Node other){
+        return(data.equals(other.data));
+    }
+    boolean same(Node other){
+        return ((line == other.line) && (position == other.position));
+    }
     void print(){
-        System.out.println("line: " + line + " position: " + position +"\n word: " + data + " length: " + length +"\n----------------------------------");
+        System.out.println("line: " + line + " position: " + position +"\nword: " + data + " length: " + length +"\n----------------------------------");
     }
 
 }
