@@ -13,7 +13,7 @@ class Node {
         this.length = length;
     }
     boolean equals(Node other){
-        return(data.equals(other.data));
+        return(data.equalsIgnoreCase(other.data));
     }
     boolean same(Node other){
         return ((line == other.line) && (position == other.position));

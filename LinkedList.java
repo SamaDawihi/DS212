@@ -85,25 +85,25 @@ public class LinkedList {
         System.out.println("unique: " + uniqueWordsNumber());
         
     }
+   
     int uniqueWordsNumber(){// errorsss
         if (length == 0) return 0;
         if (length == 1) return 1;
 
-        current = head;
-        Node current2 = current.next;
         int unique = 0;
+        
+        Node isUnique = head;
+        current = head.next;
 
         for (int i = 0; i < length; i++){
-            while (current2 != null){
-                if ((current2.equals(current))&&(!current2.same(current))){
+            while(current != null){
+                if(isUnique.equals(current) && !(isUnique.same(current)))
                     break;
-                }
-                current2 = current2.next;
+                current = current.next;
             }
-            if (current2 == null) unique++;
-
-            current = current.next;
-            current2 = head;
+            if(current == null) ++unique;
+            current = head;
+            isUnique = isUnique.next;
         }
         return unique;
     }
