@@ -76,18 +76,50 @@ public class LinkedList {
     }
     void print(){
         current = head;
+        /* 
         while (current != null){
             current.print();
             current = current.next;
+        }*/
+        System.out.println("length: " + length +"\noccurrence of the: " + occurrenceNumber("the"));
+        System.out.println("unique: " + uniqueWordsNumber());
+        
+    }
+    int uniqueWordsNumber(){// errorsss
+        if (length == 0) return 0;
+        if (length == 1) return 1;
+
+        current = head;
+        Node current2 = current.next;
+        int unique = 0;
+
+        for (int i = 0; i < length; i++){
+            while (current2 != null){
+                if ((current2.equals(current))&&(!current2.same(current))){
+                    break;
+                }
+                current2 = current2.next;
+            }
+            if (current2 == null) unique++;
+
+            current = current.next;
+            current2 = head;
         }
+        return unique;
+    }
+
+    
+    int occurrenceNumber(String word){
+        current = head;
+        int occurrence = 0;
+        for (int i = 0; i < length; i++){
+            if(current.data.equals(word))
+                occurrence++;
+            current = current.next;
+        }
+        return occurrence;
     }
     /* 
-    int uniqueWordsNumber(){
-
-    }
-    int occurrenceNumber(String word){
-
-    }
     int wordsWithLength(int wLength){
 
     }
