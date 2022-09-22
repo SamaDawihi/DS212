@@ -10,6 +10,10 @@ class Node {
         next = null;
         this.line = line;
         this.position = position;
+        this.length = length;
+    }
+    void print(){
+        System.out.println("line: " + line + " position: " + position +"\n word: " + data + " length: " + length +"\n----------------------------------");
     }
 
 }

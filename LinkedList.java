@@ -1,17 +1,87 @@
+import java.io.*;
+import java.util.Scanner;
 public class LinkedList {
     private Node head;
     private Node current;
     private int length;
 
     LinkedList(String path){
-        
+        addFile(path);
+ 
     }
-    void insert(String word, int line, int position, int length){
+    void addFile(String path){
+        int line = 0;
+        int position = 0;
+        String str = "";
+        String word = "";
 
+        try{
+            File file = new File(path);
+            FileReader reader = new FileReader(file);
+            BufferedReader reader2 = new BufferedReader(reader);
+            try{
+                while(true){
+
+
+                    if (!word.equals("")){
+                        insert(word,line,++position);
+                            word = "";
+                    }
+                    str = reader2.readLine();
+                    if(str == null) break;
+                    line++;
+                    position = 0;
+
+                    for(int i = 0; i < str.length(); i++){
+
+                        if(Character.isLetter(str.charAt(i))){
+                            word += str.charAt(i);
+                        }
+
+                        else if(Character.isWhitespace(str.charAt(i))){
+                            insert(word,line,++position);
+                            word = "";
+                        }
+                        else if ((i != str.length() -1)&&(i != 0)){
+
+                            if((Character.isLetter(str.charAt(i+1))) && (Character.isLetter(str.charAt(i-1))))
+                                word += str.charAt(i);
+                        }
+                    }
+                }
+            }catch(EOFException ex){
+                System.out.println("Error: "+ ex);
+            }
+        }catch (IOException e){
+            System.out.println("Error: "+ e);
+        }
+        
+       if (!word.equals("")){
+        insert(word,line,++position);
+            word = "";
+        }
+    }
+    void insert(String word, int line, int position){
+        if (head == null){
+            head = new Node(word, line, position, word.length());
+            current = head;
+        }else{
+            current.next = new Node(word, line, position, word.length());
+            current = current.next;
+        }
+        length++;
     }
     int getLength(){
         return length;
     }
+    void print(){
+        current = head;
+        while (current != null){
+            current.print();
+            current = current.next;
+        }
+    }
+    /* 
     int uniqueWordsNumber(){
 
     }
@@ -31,7 +101,7 @@ public class LinkedList {
         
     }
 
-
+    */
 }
     
 
