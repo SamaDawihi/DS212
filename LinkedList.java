@@ -23,18 +23,18 @@ public class LinkedList {
                 while(true){
 
 
-                    if (!word.equals("")){
+                    if (!word.equals("")){ //////////////////////
                         insert(word,line,++position);
                             word = "";
                     }
                     str = reader2.readLine();
-                    if(str == null) break;
+                    if(str == null) break; 
                     line++;
                     position = 0;
 
                     for(int i = 0; i < str.length(); i++){
 
-                        if(Character.isLetter(str.charAt(i))){
+                        if(Character.isLetter(str.charAt(i))){  // what if a char is - or '
                             word += str.charAt(i);
                         }
 
@@ -119,16 +119,39 @@ public class LinkedList {
         }
         return occurrence;
     }
-    /* 
+    
     int wordsWithLength(int wLength){
-
+        int count ; 
+    Node temp = head ; 
+    while(temp.next!=null)
+    {
+        if ((temp.getData().length)==wLength)
+        count++ ; 
+      temp= temp.next ; // should i use current insted of temp ?   
     }
+    return count ; 
+    }
+
+    /* 
     String sortByOccurrence(){
 
     }
+    */
     String location(String word){
+    String s = "not found " ; 
+        Node temp = head ; 
+    while(temp.next!=null)
+    {
+        if (temp.data.equals(word))
+        break;
+    }
+    
+    s="("+ temp.line +","+ temp.position+")" ; 
+    return s ; 
 
     }
+
+    /* 
     boolean isAdjacent(String word1, String word2){
         
     }
