@@ -12,8 +12,8 @@ public class LinkedList {
     void addFile(String path){
         int line = 0;
         int position = 0;
-        String str = "";
-        String word = "";
+        String str = ""; //كل سطر
+        String word = ""; //كل كلمة
 
         try{
             File file = new File(path);
@@ -28,13 +28,13 @@ public class LinkedList {
                             word = "";
                     }
                     str = reader2.readLine();
-                    if(str == null) break; 
+                    //if(str == null) break; 
                     line++;
                     position = 0;
 
                     for(int i = 0; i < str.length(); i++){
 
-                        if(Character.isLetter(str.charAt(i))){  // what if a char is - or '
+                        if(Character.isLetter(str.charAt(i))){
                             word += str.charAt(i);
                         }
 
@@ -42,7 +42,7 @@ public class LinkedList {
                             insert(word,line,++position);
                             word = "";
                         }
-                        else if ((i != str.length() -1)&&(i != 0)){
+                        else if ((i != str.length() -1)&&(i != 0)){//يشيك ان مب بداية الجملة او نهايتها
 
                             if((Character.isLetter(str.charAt(i+1))) && (Character.isLetter(str.charAt(i-1))))
                                 word += str.charAt(i);
@@ -53,6 +53,8 @@ public class LinkedList {
                 System.out.println("Error: "+ ex);
             }
         }catch (IOException e){
+            System.out.println("Error: "+ e);
+        }catch (Exception e){
             System.out.println("Error: "+ e);
         }
         
@@ -121,17 +123,17 @@ public class LinkedList {
     }
     
     int wordsWithLength(int wLength){
-        int count ; 
-    Node temp = head ; 
-    while(temp.next!=null)
-    {
-        if ((temp.getData().length)==wLength)
-        count++ ; 
-      temp= temp.next ; // should i use current insted of temp ?   
+        int count = 0; 
+        current = head ; 
+    while(current!=null){
+        if ((current.length)==wLength){
+            count++; 
+            current= current.next ;  
+        }
+        }
+        return count; 
+        
     }
-    return count ; 
-    }
-
     /* 
     String sortByOccurrence(){
 
@@ -139,10 +141,10 @@ public class LinkedList {
     */
     String location(String word){
     String s = "not found " ; 
-        Node temp = head ; 
-    while(temp.next!=null)
+    current = head ; 
+    while(current!=null)
     {
-        if (temp.data.equals(word))
+        if (current.data.equals(word))
         break;
     }
     
