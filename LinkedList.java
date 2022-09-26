@@ -7,6 +7,7 @@ public class LinkedList {
 
     LinkedList(String path){
         addFile(path);
+        calculateOccurance();
  
     }
     void addFile(String path){
@@ -73,63 +74,72 @@ public class LinkedList {
         }
         length++;
     }
+    void calculateOccurance(){
+        Node temp;
+        current = head;
+        for(int i=0; i< length; i++){
+            temp = current.next;
+            if(current.unique){
+                current.occurrence++;
+            }
+            for(int j = i + 1; j < length; j++){
+                if(current.equals(temp)){
+                    current.occurrence++;
+                    temp.unique = false;
+                }
+                temp = temp.next;
+            }
+            current = current.next;
+        }
+
+
+    }
+
     int getLength(){
         return length;
     }
     void print(){
         current = head;
-        /* 
+         
         while (current != null){
             current.print();
             current = current.next;
-        }*/
-        System.out.println("length: " + length +"\noccurrence of the: " + occurrenceNumber("the"));
+        }
+        System.out.println("length: " + length +"\noccurrence of (is): " + occurrenceNumber("is"));
         System.out.println("unique: " + uniqueWordsNumber());
         
     }
    
-    int uniqueWordsNumber(){// errorsss
-        if (length == 0) return 0;
-        if (length == 1) return 1;
-
-        int unique = 0;
-        
-        Node isUnique = head;
-        current = head.next;
-
+    int uniqueWordsNumber(){
+        int uniqueWords = 0;
+        current = head;
         for (int i = 0; i < length; i++){
-            while(current != null){
-                if(isUnique.equals(current) && !(isUnique.same(current)))
-                    break;
-                current = current.next;
-            }
-            if(current == null) ++unique;
-            current = head;
-            isUnique = isUnique.next;
+           if(current.unique) 
+                uniqueWords++;
+            current = current.next;
         }
-        return unique;
+        return uniqueWords;
     }
 
     
     int occurrenceNumber(String word){
         current = head;
-        int occurrence = 0;
         for (int i = 0; i < length; i++){
             if(current.data.equals(word))
-                occurrence++;
+                return current.occurrence;
             current = current.next;
         }
-        return occurrence;
+        return 0;
     }
     
     int wordsWithLength(int wLength){
         int count = 0; 
         current = head ; 
-    while(current!=null){
-        if ((current.length)==wLength){
-            count++; 
-            current= current.next ;  
-        }
+        while(current!=null){
+            if ((current.length)==wLength){
+                count++; 
+                current= current.next ;  
+            }
         }
         return count; 
         
@@ -140,16 +150,16 @@ public class LinkedList {
     }
     */
     String location(String word){
-    String s = "not found " ; 
-    current = head ; 
-    while(current!=null)
-    {
-        if (current.data.equals(word))
-        break;
-    }
-    
-    s="("+ temp.line +","+ temp.position+")" ; 
-    return s ; 
+        String s = "not found " ; 
+        current = head ; 
+        while(current!=null)
+        {
+            if (current.data.equals(word))
+            break;
+        }
+        
+        s="("+ current.line +","+ current.position+")" ; 
+        return s ; 
 
     }
 

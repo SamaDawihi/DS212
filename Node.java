@@ -4,6 +4,8 @@ class Node {
     int line;
     int position;
     int length;
+    boolean unique;
+    int occurrence;
 
     Node(String data, int line, int position, int length) {
         this.data = data;
@@ -11,6 +13,8 @@ class Node {
         this.line = line;
         this.position = position;
         this.length = length;
+        unique = true;
+        occurrence = 0;
     }
     boolean equals(Node other){
         return(data.equalsIgnoreCase(other.data));
@@ -19,7 +23,7 @@ class Node {
         return ((line == other.line) && (position == other.position));
     }
     void print(){
-        System.out.println("line: " + line + " position: " + position +"\nword: " + data + " length: " + length +"\n----------------------------------");
+        System.out.println("line: (" + line + ") position: (" + position +"\nword: (" + data + ") length: (" + length + "\nisUnique: (" + unique +") occurrence: ("+ occurrence + "\n----------------------------------");
     }
 
 }
