@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class LinkedList {
     private Node head;
     private Node current;
-    private int length;
+    private int length; //عدد الكلمات
 
     LinkedList(String path){
         addFile(path);
@@ -19,23 +19,23 @@ public class LinkedList {
         try{
             File file = new File(path);
             FileReader reader = new FileReader(file);
-            BufferedReader reader2 = new BufferedReader(reader);
+            BufferedReader reader2 = new BufferedReader(reader); //i a-m a student/n in king saud uni
             try{
                 while(true){
 
 
-                    if (!word.equals("")){ //////////////////////
+                    if (!word.equals("")){ // عشان يضيف اخر كلمة بالسطر
                         insert(word,line,++position);
                             word = "";
                     }
                     str = reader2.readLine();
-                    //if(str == null) break; 
+                    if(str == null) break; //وصلنا اخر السطر
                     line++;
                     position = 0;
 
-                    for(int i = 0; i < str.length(); i++){
+                    for(int i = 0; i < str.length(); i++){ //نمشي على حرف حرف
 
-                        if(Character.isLetter(str.charAt(i))){
+                        if(Character.isLetter(str.charAt(i))){ // حرف
                             word += str.charAt(i);
                         }
 
@@ -43,9 +43,9 @@ public class LinkedList {
                             insert(word,line,++position);
                             word = "";
                         }
-                        else if ((i != str.length() -1)&&(i != 0)){//يشيك ان مب بداية الجملة او نهايتها
+                        else if ((i != str.length() -1)&&(i != 0)){//يشيك ان مب بدايةالسطر او نهايتها
 
-                            if((Character.isLetter(str.charAt(i+1))) && (Character.isLetter(str.charAt(i-1))))
+                            if((Character.isLetter(str.charAt(i+1))) && (Character.isLetter(str.charAt(i-1)))) //اذا بداية الكلمة قبلها سبيس
                                 word += str.charAt(i);
                         }
                     }
@@ -59,7 +59,7 @@ public class LinkedList {
             System.out.println("Error: "+ e);
         }
         
-       if (!word.equals("")){
+       if (!word.equals("")){ //مانستفيد منها يمكن
         insert(word,line,++position);
             word = "";
         }
@@ -77,11 +77,10 @@ public class LinkedList {
     void calculateOccurance(){
         Node temp;
         current = head;
-        for(int i=0; i< length; i++){
+        for(int i=0; i< length; i++){  //نمشي على عدد النودز
             temp = current.next;
-            if(current.unique){
+            if(current.unique){ //التكرار فقط لاول ظهور
                 current.occurrence++;
-            }
             for(int j = i + 1; j < length; j++){
                 if(current.equals(temp)){
                     current.occurrence++;
@@ -89,6 +88,7 @@ public class LinkedList {
                 }
                 temp = temp.next;
             }
+        } //we have to try it 
             current = current.next;
         }
 
@@ -98,7 +98,7 @@ public class LinkedList {
     int getLength(){
         return length;
     }
-    void print(){
+    void print(){ //just for test
         current = head;
          
         while (current != null){
@@ -144,11 +144,41 @@ public class LinkedList {
         return count; 
         
     }
-    /* 
-    String sortByOccurrence(){
-
+    void sortByOccurrence(){
+        int arr[] = new int[length];
+        Node tmp = head;
+        for (int i=0 ; i<length ;i++){
+            arr[i]=tmp.occurrence;
+            tmp = tmp.next;
+        }//عبيت الاراي
+        for (int i=0; i<arr.length-1 ;i++){
+            for(int j=0; j<arr.length-1-i ;j++){
+                if(arr[j] > arr[j+1]){
+                    int place = arr[j];
+                    arr[j] = arr[j+1];
+                    arr[j+1] = place; 
+                }
+            }
+        } //end sorting
+        int max = 0;
+        for(int i=arr.length-1; i>=0; i--){
+            int value = arr[i];
+            if(value != max && value !=0){
+                tmp = head;
+                while(tmp != null){
+                    if(tmp.occurrence == value)
+                        System.out.print("("+tmp.data+","+value+"),");
+                        tmp=tmp.next;
+                }
+            }
+            max = value;
+            if(value != 0 ) 
+                continue;
+            else 
+                break;
+        }
     }
-    */
+
     String location(String word){
         String s = "not found " ; 
         current = head ; 
