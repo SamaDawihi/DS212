@@ -206,7 +206,7 @@ public class LinkedList {
             if (p.data.equalsIgnoreCase(word1) || p.data.equalsIgnoreCase(word2)){
                 for (int j= i+1 ; j<length ; j++){
                     q = q.next;
-                    if ( (q.data.equalsIgnoreCase(word1) || q.data.equalsIgnoreCase(word2)) && (!q.data.equalsIgnoreCase(p.data)) ){
+                    if ( (q.data.equalsIgnoreCase(word1) || q.data.equalsIgnoreCase(word2)) ){
                         if (q.line == p.line && (q.position == p.position+1 || p.position == q.position+1))
                             return true;
                         else if (p.occurrence == 1)
