@@ -1,5 +1,7 @@
 import java.io.*;
 import java.util.Scanner;
+
+import javax.lang.model.util.ElementScanner14;
 public class LinkedList {
     private Node head;
     private Node current;
@@ -144,7 +146,7 @@ public class LinkedList {
         return count; 
         
     }
-    void sortByOccurrence(){
+    String sortByOccurrence(){
         int arr[] = new int[length];
         Node tmp = head;
         for (int i=0 ; i<length ;i++){
@@ -160,6 +162,7 @@ public class LinkedList {
                 }
             }
         } //end sorting
+        String sorted = "";
         int max = 0;
         for(int i=arr.length-1; i>=0; i--){
             int value = arr[i];
@@ -167,16 +170,20 @@ public class LinkedList {
                 tmp = head;
                 while(tmp != null){
                     if(tmp.occurrence == value)
-                        System.out.print("("+tmp.data+","+value+"),");
+                        sorted += "("+tmp.data+","+value+"),";
                         tmp=tmp.next;
                 }
             }
             max = value;
             if(value != 0 ) 
                 continue;
-            else 
-                break;
+            else {
+                sorted = sorted.substring(0,sorted.length()-1);
+                return sorted;
+            }
         }
+        sorted = sorted.substring(0,sorted.length()-1);
+        return sorted;
     }
 
     String location(String word){
@@ -192,13 +199,28 @@ public class LinkedList {
         return s ; 
 
     }
-
-    /* 
+ 
     boolean isAdjacent(String word1, String word2){
-        
-    }
-
-    */
+        Node p =head , q = head;
+        for (int i=0 ; i<length-1 ; i++){
+            if (p.data.equalsIgnoreCase(word1) || p.data.equalsIgnoreCase(word2)){
+                for (int j= i+1 ; j<length ; j++){
+                    q = q.next;
+                    if ( (q.data.equalsIgnoreCase(word1) || q.data.equalsIgnoreCase(word2)) && (!q.data.equalsIgnoreCase(p.data)) ){
+                        if (q.line == p.line && (q.position == p.position+1 || p.position == q.position+1))
+                            return true;
+                        else if (p.occurrence == 1)
+                            return false;
+                        else 
+                            break; }//end inner if
+            }//end inner for
+            }// end first if
+            q = p; 
+            p = p.next;
+            q= q.next;
+        }//end outer for
+        return false;
+    }//end method
 }
     
 
