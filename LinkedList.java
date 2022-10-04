@@ -97,7 +97,7 @@ public class LinkedList {
         }
     }
 
-    int getTotalNumberOfWords(){ //Operation 1
+    int getTotalNumberOfWords(){ //Operation 1 // big oh (1)
         return length;
     }
     
@@ -113,7 +113,7 @@ public class LinkedList {
         
     }
    
-    int uniqueWordsNumber(){ //Operation 2
+    int uniqueWordsNumber(){ //Operation 2 // big oh (n)
         int uniqueWords = 0;
         current = head;
         for (int i = 0; i < length; i++){
@@ -125,7 +125,7 @@ public class LinkedList {
     }
 
     
-    int occurrenceNumber(String word){ //Operation 3
+    int occurrenceNumber(String word){ //Operation 3 // big oh (n)
         current = head;
         while(current != null){
             if(current.data.equals(word))
@@ -135,7 +135,7 @@ public class LinkedList {
         return 0;
     }
     
-    int wordsWithLength(int wLength){ //Operation 4
+    int wordsWithLength(int wLength){ //Operation 4 // big oh (n)
         int count = 0; 
         current = head ; 
         while(current!=null){
@@ -148,7 +148,7 @@ public class LinkedList {
         
     }
     
-    String sortByOccurrence(){ //Operation 5
+    String sortByOccurrence(){ //Operation 5 // big oh (n^2)
         int max = 0;
         current = head;
         while(current!=null){ // big oh (n)
@@ -171,7 +171,7 @@ public class LinkedList {
         return sorted;
     }
 
-    String location(String word){ //Operation 6
+    String location(String word){ //Operation 6 // big oh (n)
         String s = "not found " ; 
         current = head ; 
         while(current!=null)
@@ -185,7 +185,7 @@ public class LinkedList {
 
     }
  
-    boolean isAdjacent(String word1, String word2){ //Operation 7
+    boolean isAdjacent(String word1, String word2){ //Operation 7 // big oh (n)
         Node p =head , q = head;
         for (int i = 0 ; i < length - 1 ; i++){
             if (p.data.equalsIgnoreCase(word1)){
