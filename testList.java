@@ -7,7 +7,7 @@ class testList {
            // String s = ll.sortByOccurrence();
             //System.out.println(s);
             //System.out.println( ll.isAdjacent("a", "the"));
-            System.out.println(ll.sortByOccurrence() + 289);
+            System.out.println(ll.sortByOccurrence());
 
     }
 
