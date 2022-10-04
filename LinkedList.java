@@ -154,8 +154,8 @@ public class LinkedList {
         while(current!=null){ // big oh (n)
             if (current.occurrence > max){
                 max = current.occurrence;
-                current = current.next;
             }
+            current = current.next;
         }
         String sorted = "";
         while (max > 0){ // big oh (n) * max occurrence ==> n^2
