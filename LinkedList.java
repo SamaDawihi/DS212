@@ -146,41 +146,26 @@ public class LinkedList {
         
     }
     String sortByOccurrence(){
-        int arr[] = new int[length];
-        Node tmp = head;
-        for (int i=0 ; i<length ;i++){
-            arr[i]=tmp.occurrence;
-            tmp = tmp.next;
-        }//عبيت الاراي
-        for (int i=0; i<arr.length-1 ;i++){
-            for(int j=0; j<arr.length-1-i ;j++){
-                if(arr[j] > arr[j+1]){
-                    int place = arr[j];
-                    arr[j] = arr[j+1];
-                    arr[j+1] = place; 
-                }
-            }
-        } //end sorting
-        String sorted = "";
         int max = 0;
-        for(int i=arr.length-1; i>=0; i--){
-            int value = arr[i];
-            if(value != max && value !=0){
-                tmp = head;
-                while(tmp != null){
-                    if(tmp.occurrence == value)
-                        sorted += "("+tmp.data+","+value+"),";
-                        tmp=tmp.next;
-                }
-            }
-            max = value;
-            if(value != 0 ) 
-                continue;
-            else {
-                sorted = sorted.substring(0,sorted.length()-1);
-                return sorted;
+        current = head;
+        while(current!=null){
+            if (current.occurrence > max){
+                max = current.occurrence;
             }
         }
+        String sorted = "";
+            current = head;
+            for (int i = max; i > 0; i--){
+            while(current != null){
+                if(current.occurrence == max)
+                    sorted += "("+current.data+","+max+"),";
+                    current = current.next;
+            }
+            
+            max--;
+            if(max == 0 ) 
+                break;
+            }
         sorted = sorted.substring(0,sorted.length()-1);
         return sorted;
     }
