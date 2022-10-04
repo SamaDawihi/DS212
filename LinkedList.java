@@ -66,6 +66,7 @@ public class LinkedList {
             word = "";
         }
     }
+    
     void insert(String word, int line, int position){
         if (head == null){
             head = new Node(word, line, position, word.length());
@@ -96,9 +97,10 @@ public class LinkedList {
         }
     }
 
-    int getLength(){
+    int getTotalNumberOfWords(){ //Operation 1
         return length;
     }
+    
     void print(){ //just for test
         current = head;
          
@@ -111,7 +113,7 @@ public class LinkedList {
         
     }
    
-    int uniqueWordsNumber(){
+    int uniqueWordsNumber(){ //Operation 2
         int uniqueWords = 0;
         current = head;
         for (int i = 0; i < length; i++){
@@ -123,9 +125,9 @@ public class LinkedList {
     }
 
     
-    int occurrenceNumber(String word){
+    int occurrenceNumber(String word){ //Operation 3
         current = head;
-        for (int i = 0; i < length; i++){
+        while(current != null){
             if(current.data.equals(word))
                 return current.occurrence;
             current = current.next;
@@ -133,7 +135,7 @@ public class LinkedList {
         return 0;
     }
     
-    int wordsWithLength(int wLength){
+    int wordsWithLength(int wLength){ //Operation 4
         int count = 0; 
         current = head ; 
         while(current!=null){
@@ -145,32 +147,31 @@ public class LinkedList {
         return count; 
         
     }
-    String sortByOccurrence(){
+    
+    String sortByOccurrence(){ //Operation 5
         int max = 0;
         current = head;
-        while(current!=null){
+        while(current!=null){ // big oh (n)
             if (current.occurrence > max){
                 max = current.occurrence;
             }
         }
         String sorted = "";
+        while (max > 0){ // big oh (n) * max occurrence ==> n^2
             current = head;
-            for (int i = max; i > 0; i--){
-            while(current != null){
+            while(current != null){ 
                 if(current.occurrence == max)
                     sorted += "("+current.data+","+max+"),";
-                    current = current.next;
-            }
-            
+                current = current.next;
+            }    
             max--;
-            if(max == 0 ) 
-                break;
-            }
+            if(max == 0 ) break;
+        }
         sorted = sorted.substring(0,sorted.length()-1);
         return sorted;
     }
 
-    String location(String word){
+    String location(String word){ //Operation 6
         String s = "not found " ; 
         current = head ; 
         while(current!=null)
@@ -184,21 +185,21 @@ public class LinkedList {
 
     }
  
-    boolean isAdjacent(String word1, String word2){
+    boolean isAdjacent(String word1, String word2){ //Operation 7
         Node p =head , q = head;
         for (int i = 0 ; i < length - 1 ; i++){
             if (p.data.equalsIgnoreCase(word1)){
                 q = p.next;
                 if(q.data.equalsIgnoreCase(word2)&&(q.line == p.line))
                     return true;
-            }// end first if
+            }// end first if to check word1
             else if (p.data.equalsIgnoreCase(word2)){
                 q = p.next;
                 if(q.data.equalsIgnoreCase(word1)&&(q.line == p.line))
                     return true;
-            }// end second if
+            }// end second if to check word2
             p = p.next;
-        }//end outer for
+        }//end for loop
         return false;
     }//end method
 }

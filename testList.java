@@ -6,7 +6,7 @@ class testList {
             //ll.print();
            // String s = ll.sortByOccurrence();
             //System.out.println(s);
-            System.out.println( ll.isAdjacent("and", "the"));
+            System.out.println( ll.isAdjacent("a", "the"));
     }
 
     
