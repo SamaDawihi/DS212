@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.Scanner;
-
 import javax.lang.model.util.ElementScanner14;
+
 public class LinkedList {
     private Node head;
     private Node current;
@@ -172,15 +172,19 @@ public class LinkedList {
     }
 
     String location(String word){ //Operation 6 // big oh (n)
-        String s = "not found " ; 
-        current = head ; 
-        while(current!=null)
+        String s = "" ; 
+        Node p = head ; 
+        int a=0; 
+        int z =occurrenceNumber(word); 
+    
+        while(a !=z ) // no need to add condition p!=null
         {
-            if (current.data.equals(word))
-            break;
+            if (p.data.equals(word))
+            s=s+"\n("+ current.line +","+ current.position+")" ; 
+            a++; 
         }
         
-        s="("+ current.line +","+ current.position+")" ; 
+        
         return s ; 
 
     }
