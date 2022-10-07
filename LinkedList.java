@@ -7,11 +7,11 @@ public class LinkedList {
     private Node current;
     private int length; //عدد الكلمات
     private Node[] sorted;
-    private int maxOccurence;
+    private int maxOccurrence;
 
     LinkedList(String path){
         addFile(path);
-        calculateOccurance();
+        calculateOccurrence();
         sortedArray();
  
     }
@@ -81,9 +81,9 @@ public class LinkedList {
         length++;
     }
 
-    void calculateOccurance(){
+    void calculateOccurrence(){
         Node temp;
-        maxOccurence = 1;
+        maxOccurrence = 1;
         current = head;
         for(int i=0; i< length; i++){  //نمشي على عدد النودز
             temp = current.next;
@@ -92,7 +92,7 @@ public class LinkedList {
             for(int j = i + 1; j < length; j++){
                 if(current.equals(temp)){
                     current.occurrence++;
-                    maxOccurence++;
+                    maxOccurrence++;
                     temp.unique = false;
                 }
                 temp = temp.next;
@@ -104,7 +104,7 @@ public class LinkedList {
     
     void sortedArray(){ //add unique nodes sorted by occurrence in sorted array
         sorted = new Node[uniqueWordsNumber()];
-        int max = maxOccurence;
+        int max = maxOccurrence;
         int i = 0;
         while (max > 0){ // big oh (n) * max occurrence ==> n^2
             current = head;
