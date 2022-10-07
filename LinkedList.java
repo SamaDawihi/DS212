@@ -6,10 +6,13 @@ public class LinkedList {
     private Node head;
     private Node current;
     private int length; //عدد الكلمات
+    private Node[] sorted;
+    private int maxOccurence;
 
     LinkedList(String path){
         addFile(path);
         calculateOccurance();
+        sortedArray();
  
     }
     void addFile(String path){
@@ -80,6 +83,7 @@ public class LinkedList {
 
     void calculateOccurance(){
         Node temp;
+        maxOccurence = 1;
         current = head;
         for(int i=0; i< length; i++){  //نمشي على عدد النودز
             temp = current.next;
@@ -88,6 +92,7 @@ public class LinkedList {
             for(int j = i + 1; j < length; j++){
                 if(current.equals(temp)){
                     current.occurrence++;
+                    maxOccurence++;
                     temp.unique = false;
                 }
                 temp = temp.next;
@@ -96,21 +101,24 @@ public class LinkedList {
             current = current.next;
         }
     }
-
-    int getTotalNumberOfWords(){ //Operation 1 // big oh (1)
-        return length;
+    
+    void sortedArray(){ //add unique nodes sorted by occurrence in sorted array
+        sorted = new Node[uniqueWordsNumber()];
+        int max = maxOccurence;
+        int i = 0;
+        while (max > 0){ // big oh (n) * max occurrence ==> n^2
+            current = head;
+            while(current != null){ 
+                if(current.occurrence == max)
+                    sorted[i++] = current;
+                current = current.next;
+            }    
+            max--;
+        }
     }
     
-    void print(){ //just for test
-        current = head;
-         
-        while (current != null){
-            current.print();
-            current = current.next;
-        }
-        System.out.println("length: " + length +"\noccurrence of (is): " + occurrenceNumber("is"));
-        System.out.println("unique: " + uniqueWordsNumber());
-        
+    int getTotalNumberOfWords(){ //Operation 1 // big oh (1)
+        return length;
     }
    
     int uniqueWordsNumber(){ //Operation 2 // big oh (n)
@@ -147,7 +155,14 @@ public class LinkedList {
         return count; 
         
     }
-    
+    String sortByOccurrence(){ //Operation 5 // big oh (m)
+        String result = "";
+        for(int i=0; i<sorted.length; i++){
+            result += "("+sorted[i].data+","+sorted[i].occurrence+"),";
+        }
+        return result.substring(0,result.length()-1);
+    }
+    /* old sort 
     String sortByOccurrence(){ //Operation 5 // big oh (n^2)
         int max = 0;
         current = head;
@@ -170,6 +185,7 @@ public class LinkedList {
         sorted = sorted.substring(0,sorted.length()-1);
         return sorted;
     }
+    */
 
     String location(String word){ //Operation 6 // big oh (n)
         String s = "" ; 
@@ -177,14 +193,11 @@ public class LinkedList {
         int a=0; 
         int z =occurrenceNumber(word); 
     
-        while(a !=z ) // no need to add condition p!=null
-        {
+        while(a !=z ){ // no need to add condition p!=null
             if (p.data.equals(word))
             s=s+"\n("+ current.line +","+ current.position+")" ; 
             a++; 
         }
-        
-        
         return s ; 
 
     }
@@ -206,6 +219,16 @@ public class LinkedList {
         }//end for loop
         return false;
     }//end method
-}
-    
 
+    void print(){ //just for test
+        current = head;
+        
+        while (current != null){
+            current.print();
+            current = current.next;
+        }
+        System.out.println("length: " + length +"\noccurrence of (is): " + occurrenceNumber("is"));
+        System.out.println("unique: " + uniqueWordsNumber());
+        
+    }
+}
