@@ -133,28 +133,26 @@ public class LinkedList {
     }
 
     
-    int occurrenceNumber(String word){ //Operation 3 // big oh (n)
+    int occurrenceNumber(String word){ //Operation 3 // big oh (m)
         current = head;
-        while(current != null){
-            if(current.data.equals(word))
-                return current.occurrence;
-            current = current.next;
+        for(int i=0; i<sorted.length; i++){
+            if(sorted[i].data.equals(word))
+                return sorted[i].occurrence;
         }
         return 0;
     }
     
-    int wordsWithLength(int wLength){ //Operation 4 // big oh (n)
+    int wordsWithLength(int wLength){ //Operation 4 // big oh (m)
         int count = 0; 
-        current = head ; 
-        while(current!=null){
-            if ((current.length)==wLength){
-                count++; 
-                current= current.next ;  
+        for(int i=0; i<sorted.length; i++){
+            if ((sorted[i].length)==wLength){
+                count++;  
             }
         }
         return count; 
         
     }
+    
     String sortByOccurrence(){ //Operation 5 // big oh (m)
         String result = "";
         for(int i=0; i<sorted.length; i++){
@@ -162,6 +160,7 @@ public class LinkedList {
         }
         return result.substring(0,result.length()-1);
     }
+    
     /* old sort 
     String sortByOccurrence(){ //Operation 5 // big oh (n^2)
         int max = 0;
@@ -222,13 +221,13 @@ public class LinkedList {
 
     void print(){ //just for test
         current = head;
-        
+        /* 
         while (current != null){
             current.print();
             current = current.next;
-        }
-        System.out.println("length: " + length +"\noccurrence of (is): " + occurrenceNumber("is"));
-        System.out.println("unique: " + uniqueWordsNumber());
+        }*/
+        System.out.println("length: " + length +"\noccurrence of (data): " + occurrenceNumber("data"));
+        System.out.println("words with length 2: " + wordsWithLength(2));
         
     }
 }
