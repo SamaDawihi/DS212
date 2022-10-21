@@ -1,29 +1,13 @@
-class Node {
-    String data;
-    Node next;
-    int line;
-    int position;
-    int length;
-    boolean unique;
-    int occurrence;
+public class Node<T>{
+    T data;
+    Node<T> next;
 
-    Node(String data, int line, int position, int length) {
-        this.data = data;
+    Node() {
+        data = null;
         next = null;
-        this.line = line;
-        this.position = position;
-        this.length = length;
-        unique = true;
-        occurrence = 0;
     }
-    boolean equals(Node other){
-        return(data.equalsIgnoreCase(other.data));
+    Node (T val){
+        data = val;
+        next = null;
     }
-    boolean same(Node other){
-        return ((line == other.line) && (position == other.position));
-    }
-    void print(){
-        System.out.println("line: (" + line + ") position: (" + position +"\nword: (" + data + ") length: (" + length + "\nisUnique: (" + unique +") occurrence: ("+ occurrence + "\n----------------------------------");
-    }
-
 }
