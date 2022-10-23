@@ -2,7 +2,7 @@
 
 class testList {
     public static void main(String[] args) {
-        LinkedList ll = new LinkedList("file2.txt");
+        LinkedList1 ll = new LinkedList1("file2.txt");
             ll.print();
            // String s = ll.sortByOccurrence();
             //System.out.println(s);
