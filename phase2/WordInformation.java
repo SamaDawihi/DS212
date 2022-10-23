@@ -18,5 +18,11 @@ class WordInformation{
     {
         return word;
     }
+    int getSize(){
+        return size;
+    }
+    LinkedList<WordOccurrence> getOccList(){
+        return occList;
+    }
 
 }

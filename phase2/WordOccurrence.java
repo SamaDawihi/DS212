@@ -6,4 +6,10 @@ class WordOccurrence{
         lineNo = l;
         position = p;
     }
+    public int getLine() {
+        return lineNo;
+    }
+    public int getPosition() {
+        return position;
+    }
 }
