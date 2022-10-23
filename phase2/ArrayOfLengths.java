@@ -27,7 +27,19 @@ class ArrayOfLengths{
 
 
                     if (!word.equals("")){ // عشان يضيف اخر كلمة بالسطر
-                        insert(word,lineNo,++position);
+                        boolean exists = false;
+                            arrayOfDifferentLengths[word.length()].findFirst();//تتاكد الكلمة موجودة قبل او لا
+                            while(!arrayOfDifferentLengths[word.length()].last()){
+                            String s = arrayOfDifferentLengths[word.length()].retrieve().getWord();
+                                if(s.equalsIgnoreCase(word)){
+                                    arrayOfDifferentLengths[word.length()].retrieve().addOccurrence(lineNo,position);
+                                    exists = true;
+                                    break;
+                                }
+                            }
+                            if (!exists)
+                                arrayOfDifferentLengths[word.length()].insert(new WordInformation(word, lineNo, position));
+                            wordsNumber++;
                             word = "";
                     }
                     str = reader2.readLine();
@@ -42,7 +54,20 @@ class ArrayOfLengths{
                         }
 
                         else if(Character.isWhitespace(str.charAt(i))){
-                            insert(word,lineNo,++position);
+                            boolean exists = false;
+                            arrayOfDifferentLengths[word.length()].findFirst();//تتاكد الكلمة موجودة قبل او لا
+                            while(!arrayOfDifferentLengths[word.length()].last()){
+                            String s = arrayOfDifferentLengths[word.length()].retrieve().getWord();
+                                if(s.equalsIgnoreCase(word)){
+                                    arrayOfDifferentLengths[word.length()].retrieve().addOccurrence(lineNo,position);
+                                    exists = true;
+                                    break;
+                                }
+                            }
+                            if (!exists)
+                                arrayOfDifferentLengths[word.length()].insert(new WordInformation(word, lineNo, position));
+                            
+                            wordsNumber++;
                             word = "";
                         }
                         else if ((i != str.length() -1)&&(i != 0)){//يشيك ان مب بدايةالسطر او نهايتها
@@ -62,17 +87,21 @@ class ArrayOfLengths{
         }
         
        if (!word.equals("")){ //مانستفيد منها يمكن
-        insert(word,lineNo,++position);
+        boolean exists = false;
+        arrayOfDifferentLengths[word.length()].findFirst();//تتاكد الكلمة موجودة قبل او لا
+        while(!arrayOfDifferentLengths[word.length()].last()){
+           String s = arrayOfDifferentLengths[word.length()].retrieve().getWord();
+            if(s.equalsIgnoreCase(word)){
+                arrayOfDifferentLengths[word.length()].retrieve().addOccurrence(lineNo,position);
+                exists = true;
+                break;
+            }
+        }
+        if (!exists)
+            arrayOfDifferentLengths[word.length()].insert(new WordInformation(word, lineNo, position));
+        wordsNumber++;
             word = "";
         }
-    }
-    
-    void insert(String word, int lineNo, int position){
-        arrayOfDifferentLengths[word.length()].insert(new WordInformation(word, lineNo, position));//تتاكد الكلمة موجودة قبل او لا
-        
-        arrayOfDifferentLengths[word.length()].insert(new WordInformation(word, lineNo, position));
-        wordsNumber++;
-        
     }
     int documentLength(){//words number
         return wordsNumber;

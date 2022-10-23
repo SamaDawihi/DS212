@@ -13,6 +13,10 @@ class WordInformation{
         occList.insert(new WordOccurrence(line,position));
         size++;
     }
-    
+   
+    String getWord()
+    {
+        return word;
+    }
 
 }
