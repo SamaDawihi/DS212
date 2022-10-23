@@ -1,6 +1,7 @@
 import java.io.*;
 class ArrayOfLengths{
     int wordsNumber;
+    int uniqueWords;
     LinkedList<WordInformation>[] arrayOfDifferentLengths;
 
     ArrayOfLengths(String f){
@@ -37,8 +38,10 @@ class ArrayOfLengths{
                                     break;
                                 }
                             }
-                            if (!exists)
+                            if (!exists){
                                 arrayOfDifferentLengths[word.length()].insert(new WordInformation(word, lineNo, position));
+                                uniqueWords++;
+                            }
                             wordsNumber++;
                             word = "";
                     }
@@ -106,7 +109,8 @@ class ArrayOfLengths{
     int documentLength(){//words number
         return wordsNumber;
     }
-    void uniqueWords(){//unique words number
+    int uniqueWords(){//unique words number
+        return uniqueWords;
     }
     void totalWord(String s){//occurences of word s
     }
