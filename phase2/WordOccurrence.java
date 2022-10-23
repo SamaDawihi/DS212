@@ -1,4 +1,4 @@
-class WordOccurance{
+class WordOccurrence{
     int lineNo;
     int position;
 }

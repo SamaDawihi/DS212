@@ -69,18 +69,4 @@ class LinkedList<T> implements List<T>{
             current = current.next;   
     }
     
-    //added method from T3
-    void reverse(){
-        if(head == null || head.next == null) 
-            return;
-            Node<T>  prev = null, cur = head, next = null;
-            while (cur != null){
-                next = cur.next;
-                cur.next = prev;
-                prev = cur;
-                cur = next;
-            }
-            head = prev;
-    }
-    
 }
