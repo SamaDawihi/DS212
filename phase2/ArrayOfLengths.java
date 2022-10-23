@@ -1,10 +1,19 @@
 import java.io.*;
 class ArrayOfLengths{
-    int k;
+    int wordsNumber;
     LinkedList<WordInformation>[] arrayOfDifferentLengths;
 
+    ArrayOfLengths(String f){
+        arrayOfDifferentLengths = (LinkedList<WordInformation>[]) new Object[50];
+        for(int i = 0; i < 50; i++){
+            arrayOfDifferentLengths[i] = new LinkedList<WordInformation>();
+        }
+        wordsNumber = 0;
+        readFileAndAnalyse(f);
+
+    }
     void readFileAndAnalyse(String f){
-        int line = 0;
+        int lineNo = 0;
         int position = 0;
         String str = ""; //كل سطر
         String word = ""; //كل كلمة
@@ -18,12 +27,12 @@ class ArrayOfLengths{
 
 
                     if (!word.equals("")){ // عشان يضيف اخر كلمة بالسطر
-                        insert(word,line,++position);
+                        insert(word,lineNo,++position);
                             word = "";
                     }
                     str = reader2.readLine();
                     if(str == null) break; //وصلنا اخر السطر
-                    line++;
+                    lineNo++;
                     position = 0;
 
                     for(int i = 0; i < str.length(); i++){ //نمشي على حرف حرف
@@ -33,7 +42,7 @@ class ArrayOfLengths{
                         }
 
                         else if(Character.isWhitespace(str.charAt(i))){
-                            insert(word,line,++position);
+                            insert(word,lineNo,++position);
                             word = "";
                         }
                         else if ((i != str.length() -1)&&(i != 0)){//يشيك ان مب بدايةالسطر او نهايتها
@@ -52,5 +61,28 @@ class ArrayOfLengths{
             System.out.println("Error: "+ e);
         }
         
+       if (!word.equals("")){ //مانستفيد منها يمكن
+        insert(word,lineNo,++position);
+            word = "";
+        }
     }
+    
+    void insert(String word, int lineNo, int position){
+        arrayOfDifferentLengths[word.length()].insert(new WordInformation(word, lineNo, position));//تتاكد الكلمة موجودة قبل او لا
+        
+        arrayOfDifferentLengths[word.length()].insert(new WordInformation(word, lineNo, position));
+        wordsNumber++;
+        
+    }
+    int documentLength(){//words number
+        return wordsNumber;
+    }
+    void uniqueWords(){//unique words number
+    }
+    void totalWord(String s){//occurences of word s
+    }
+    void totalWordsForLength(int l){//
+
+    }
+
 }
