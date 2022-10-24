@@ -5,31 +5,30 @@ class ArrayOfLengths{
     LinkedList<WordInformation>[] arrayOfDifferentLengths;
 
     ArrayOfLengths(String f){
-        arrayOfDifferentLengths = (LinkedList<WordInformation>[]) new Object[50];
-        for(int i = 0; i < 50; i++){
+        arrayOfDifferentLengths = (LinkedList<WordInformation>[]) new LinkedList<?>[25];
+        for(int i = 0; i < 25; i++){
             arrayOfDifferentLengths[i] = new LinkedList<WordInformation>();
         }
         wordsNumber = 0;
+        uniqueWords = 0;
         readFileAndAnalyse(f);
-
     }
     void readFileAndAnalyse(String f){
         int lineNo = 0;
         int position = 0;
-        String str = ""; //كل سطر
-        String word = ""; //كل كلمة
+        String str = "";
+        String word = ""; 
 
         try{
             File file = new File(f);
             FileReader reader = new FileReader(file);
-            BufferedReader reader2 = new BufferedReader(reader); //i a-m a student/n in king saud uni
+            BufferedReader reader2 = new BufferedReader(reader); //
             try{
                 while(true){
-
-
-                    if (!word.equals("")){ // عشان يضيف اخر كلمة بالسطر
+                    if (!word.equals("")){ 
                         boolean exists = false;
-                            arrayOfDifferentLengths[word.length()].findFirst();//تتاكد الكلمة موجودة قبل او لا
+                        if(!arrayOfDifferentLengths[word.length()].empty()){
+                            arrayOfDifferentLengths[word.length()].findFirst();
                             while(!arrayOfDifferentLengths[word.length()].last()){
                             String s = arrayOfDifferentLengths[word.length()].retrieve().getWord();
                                 if(s.equalsIgnoreCase(word)){
@@ -37,52 +36,61 @@ class ArrayOfLengths{
                                     exists = true;
                                     break;
                                 }
+                                arrayOfDifferentLengths[word.length()].findNext();
                             }
-                            if(arrayOfDifferentLengths[word.length()].retrieve().getWord().equalsIgnoreCase(word)){
+                            if(!exists && arrayOfDifferentLengths[word.length()].retrieve().getWord().equalsIgnoreCase(word)){
                                 arrayOfDifferentLengths[word.length()].retrieve().addOccurrence(lineNo,position);
                                 exists = true;
                             }
-                            if (!exists){
-                                arrayOfDifferentLengths[word.length()].insert(new WordInformation(word, lineNo, position));
-                                uniqueWords++;
-                            }
-                            wordsNumber++;
-                            word = "";
+                        }
+                        if(!exists){
+                            arrayOfDifferentLengths[word.length()].insert(new WordInformation(word, lineNo, position));
+                            uniqueWords++;
+                        }
+                        position++;
+                        wordsNumber++;
+                        word = "";
                     }
+                    
                     str = reader2.readLine();
-                    if(str == null) break; //وصلنا اخر السطر
+                    if(str == null) break; 
                     lineNo++;
-                    position = 0;
+                    position = 1;
 
-                    for(int i = 0; i < str.length(); i++){ //نمشي على حرف حرف
+                    for(int i = 0; i < str.length(); i++){ 
 
-                        if(Character.isLetter(str.charAt(i))){ // حرف
+                        if(Character.isLetter(str.charAt(i))){ 
                             word += str.charAt(i);
                         }
 
                         else if(Character.isWhitespace(str.charAt(i))){
                             boolean exists = false;
-                            arrayOfDifferentLengths[word.length()].findFirst();//تتاكد الكلمة موجودة قبل او لا
-                            while(!arrayOfDifferentLengths[word.length()].last()){
-                            String s = arrayOfDifferentLengths[word.length()].retrieve().getWord();
-                                if(s.equalsIgnoreCase(word)){
+                            if(!arrayOfDifferentLengths[word.length()].empty()){
+                                arrayOfDifferentLengths[word.length()].findFirst();
+                                while(!arrayOfDifferentLengths[word.length()].last()){
+                                    String s = arrayOfDifferentLengths[word.length()].retrieve().getWord();
+                                    if(s.equalsIgnoreCase(word)){
+                                        arrayOfDifferentLengths[word.length()].retrieve().addOccurrence(lineNo,position);
+                                        exists = true;
+                                        break;
+                                    }
+                                    arrayOfDifferentLengths[word.length()].findNext();
+                                }
+                                if(!exists && arrayOfDifferentLengths[word.length()].retrieve().getWord().equalsIgnoreCase(word)){
                                     arrayOfDifferentLengths[word.length()].retrieve().addOccurrence(lineNo,position);
                                     exists = true;
-                                    break;
                                 }
                             }
-                            if(arrayOfDifferentLengths[word.length()].retrieve().getWord().equalsIgnoreCase(word)){
-                                arrayOfDifferentLengths[word.length()].retrieve().addOccurrence(lineNo,position);
-                                exists = true;
-                            }
-                            if (!exists)
+                            if (!exists){
                                 arrayOfDifferentLengths[word.length()].insert(new WordInformation(word, lineNo, position));
-                            
+                                uniqueWords++;
+                            }
+                            position++;
                             wordsNumber++;
                             word = "";
                         }
+                        
                         else if ((i != str.length() -1)&&(i != 0)){//يشيك ان مب بدايةالسطر او نهايتها
-
                             if((Character.isLetter(str.charAt(i+1))) && (Character.isLetter(str.charAt(i-1)))) //اذا بداية الكلمة قبلها سبيس
                                 word += str.charAt(i);
                         }
@@ -98,32 +106,38 @@ class ArrayOfLengths{
             System.out.println("Error: "+ e);
         }
         
-       if (!word.equals("")){ //مانستفيد منها يمكن
-        boolean exists = false;
-        arrayOfDifferentLengths[word.length()].findFirst();//تتاكد الكلمة موجودة قبل او لا
-        while(!arrayOfDifferentLengths[word.length()].last()){
-           String s = arrayOfDifferentLengths[word.length()].retrieve().getWord();
-            if(s.equalsIgnoreCase(word)){
-                arrayOfDifferentLengths[word.length()].retrieve().addOccurrence(lineNo,position);
-                exists = true;
-                break;
+        if (!word.equals("")){ 
+            boolean exists = false;
+            if(!arrayOfDifferentLengths[word.length()].empty()){
+                arrayOfDifferentLengths[word.length()].findFirst();
+                while(!arrayOfDifferentLengths[word.length()].last()){
+                    String s = arrayOfDifferentLengths[word.length()].retrieve().getWord();
+                    if(s.equalsIgnoreCase(word)){
+                        arrayOfDifferentLengths[word.length()].retrieve().addOccurrence(lineNo,position);
+                        exists = true;
+                        break;
+                    }
+                    arrayOfDifferentLengths[word.length()].findNext();
+                }
+                if(!exists && arrayOfDifferentLengths[word.length()].retrieve().getWord().equalsIgnoreCase(word)){
+                    arrayOfDifferentLengths[word.length()].retrieve().addOccurrence(lineNo,position);
+                    exists = true;
+                }
             }
-            arrayOfDifferentLengths[word.length()].findNext();
-
-        }
-        if(arrayOfDifferentLengths[word.length()].retrieve().getWord().equalsIgnoreCase(word)){
-            arrayOfDifferentLengths[word.length()].retrieve().addOccurrence(lineNo,position);
-            exists = true;
-        }
-        if (!exists)
-            arrayOfDifferentLengths[word.length()].insert(new WordInformation(word, lineNo, position));
-        wordsNumber++;
+            if (!exists){
+                arrayOfDifferentLengths[word.length()].insert(new WordInformation(word, lineNo, position));
+                uniqueWords++;
+            }
+            position++;
+            wordsNumber++;
             word = "";
         }
     }
     int documentLength(){//words number
         return wordsNumber;
     }
+
+
     int uniqueWords(){//unique words number
         return uniqueWords;
     }
@@ -134,8 +148,8 @@ class ArrayOfLengths{
     }
 
     boolean checkAdjacent(String w1, String w2){
-        if(arrayOfDifferentLengths[w1.length()].empty() || arrayOfDifferentLengths[w2.length()].empty())// check not empty()
-            return false;
+            if(arrayOfDifferentLengths[w1.length()].empty() || arrayOfDifferentLengths[w2.length()].empty())// check not empty()
+                return false;
 
             LinkedList<WordOccurrence> w1occ = new LinkedList<WordOccurrence>(); //temp list to store word 1&2 occurrences
             LinkedList<WordOccurrence> w2occ = new LinkedList<WordOccurrence>();
@@ -194,22 +208,27 @@ class ArrayOfLengths{
         return false;
     }
 
-    void print(){
-        LinkedList<WordOccurrence> C = new LinkedList<WordOccurrence>();
-
-        for(int i=1; i<10; i++){
-            System.out.println("------index: " + i + " ------");
-            while(!arrayOfDifferentLengths[i].empty() && !arrayOfDifferentLengths[i].last()){
-                System.out.println("word: " + arrayOfDifferentLengths[i].retrieve().getWord() );
-                System.out.println("occurences:  " + arrayOfDifferentLengths[i].retrieve().getSize());
+    void printArray(){
+        System.out.println("Print Method");
+        System.out.println("words: " + documentLength() + " unique words: " + uniqueWords());
+        for(int i=1; i<12; i++){
+            if(!arrayOfDifferentLengths[i].empty()){
+                arrayOfDifferentLengths[i].findFirst();
+                System.out.println("------index: " + i + " ------");
+                while(!arrayOfDifferentLengths[i].last()){
+                    arrayOfDifferentLengths[i].retrieve().printInfo();
+                    System.out.println("-------------------------------");
+                    arrayOfDifferentLengths[i].findNext();
+                }
+                arrayOfDifferentLengths[i].retrieve().printInfo();
                 System.out.println("-------------------------------");
-                
-                arrayOfDifferentLengths[i].findNext();
             }
-            System.out.println("word: " + arrayOfDifferentLengths[i].retrieve().getWord() );
-            System.out.println("occurences:  " + arrayOfDifferentLengths[i].retrieve().getSize());
-            System.out.println("-------------------------------");
         }
+        System.out.println("-------------------------------");
+        System.out.println("test adjacent Method");
+        System.out.println("word1 = operations, word2 = or result: " + checkAdjacent("operations", "or"));
+
+
     }
 
 }

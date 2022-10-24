@@ -12,4 +12,7 @@ class WordOccurrence{
     public int getPosition() {
         return position;
     }
+    void printOcc(){
+        System.out.println("line: " + lineNo + " position: " + position);
+    }
 }

@@ -24,5 +24,15 @@ class WordInformation{
     LinkedList<WordOccurrence> getOccList(){
         return occList;
     }
+    void printInfo(){
+        System.out.println("word: " + word);
+        System.out.println("Occurences: " + size);
+        System.out.println("locations: ");
+        occList.findFirst();
+        for(int i=0;i<size;i++){
+            occList.retrieve().printOcc();
+            occList.findNext();
+        }
+    }
 
 }
