@@ -150,16 +150,16 @@ class ArrayOfLengths{
             if (!arrayOfDifferentLengths[l].empty()) // if ( arrayOfDifferentLengths[l].getsize() > 0)
             {
 
-                while(!arrayOfDifferentLengths[1].last())
+                while(!arrayOfDifferentLengths[l].last())
                 {
-                    if (arrayOfDifferentLengths[1].retrieve().word.equalsIgnoreCase(s))
-                    occlist = arrayOfDifferentLengths[1].retrieve().occList ; 
+                    if (arrayOfDifferentLengths[l].retrieve().word.equalsIgnoreCase(s))
+                    occlist = arrayOfDifferentLengths[l].retrieve().occList ; 
 
-                    arrayOfDifferentLengths[1].findNext();
+                    arrayOfDifferentLengths[l].findNext();
                 }
 
-                if (arrayOfDifferentLengths[1].retrieve().word.equalsIgnoreCase(s))
-                occlist = arrayOfDifferentLengths[1].retrieve().occList ; 
+                if (arrayOfDifferentLengths[l].retrieve().word.equalsIgnoreCase(s))
+                    occlist = arrayOfDifferentLengths[l].retrieve().occList ; 
             }
 
 
@@ -170,69 +170,50 @@ class ArrayOfLengths{
     int totalWordsForLength(int l){//(4) RANA returns word list in an index l 
 
         int i = arrayOfDifferentLengths[l].retrieve().getSize();
-        return i ; } 
+        return i ; 
+    } 
 
 
     boolean checkAdjacent(String w1, String w2){
             if(arrayOfDifferentLengths[w1.length()].empty() || arrayOfDifferentLengths[w2.length()].empty())// check not empty()
                 return false;
+            LinkedList<WordOccurrence> w1occ = occurrences(w1); //temp list to store word 1&2 occurrences
+            LinkedList<WordOccurrence> w2occ = occurrences(w2);
+            
+            int l1,l2,p1,p2;
 
-            LinkedList<WordOccurrence> w1occ = new LinkedList<WordOccurrence>(); //temp list to store word 1&2 occurrences
-            LinkedList<WordOccurrence> w2occ = new LinkedList<WordOccurrence>();
-            int size1 = 0, size2 = 0; //sizes of w1occ and w2occ
-
-            //find w1 occ list
-            arrayOfDifferentLengths[w1.length()].findFirst();
-            while(!arrayOfDifferentLengths[w1.length()].last()){
-                if(w1.equalsIgnoreCase(arrayOfDifferentLengths[w1.length()].retrieve().getWord())){
-                    size1 = arrayOfDifferentLengths[w1.length()].retrieve().getSize();
-                    w1occ = arrayOfDifferentLengths[w1.length()].retrieve().getOccList();
-                    break;
-                }
-                arrayOfDifferentLengths[w1.length()].findNext();
-            }
-            //check last element
-            if(w1.equalsIgnoreCase(arrayOfDifferentLengths[w1.length()].retrieve().getWord())){
-                size1 = arrayOfDifferentLengths[w1.length()].retrieve().getSize();
-                w1occ = arrayOfDifferentLengths[w1.length()].retrieve().getOccList();
-            }
-            //end of find w1 occ list
-
-            //find w2 occ list
-            arrayOfDifferentLengths[w2.length()].findFirst();
-            while(!arrayOfDifferentLengths[w2.length()].last()){
-                if(w2.equalsIgnoreCase(arrayOfDifferentLengths[w2.length()].retrieve().getWord())){
-                    size2 = arrayOfDifferentLengths[w2.length()].retrieve().getSize();
-                    w2occ = arrayOfDifferentLengths[w2.length()].retrieve().getOccList();
-                    break;
-                }
-                arrayOfDifferentLengths[w2.length()].findNext();
-            }
-            //check last elemnt
-            if(w2.equalsIgnoreCase(arrayOfDifferentLengths[w2.length()].retrieve().getWord())){
-                size2 = arrayOfDifferentLengths[w2.length()].retrieve().getSize();
-                w2occ = arrayOfDifferentLengths[w2.length()].retrieve().getOccList();
-            }
-            //end of find w1 occ list
-
-            //checking adj
             w1occ.findFirst();
-            for(int n = 0; n < size1; n++) {
-                w2occ.findFirst();
-                for(int i=0; i < size2; i++){
-                    if(w1occ.retrieve().getLine() == w2occ.retrieve().getLine()){
-                        if(Math.abs(w1occ.retrieve().getPosition() -  w2occ.retrieve().getPosition()) == 1)
-                            return true;
-                    }
-                    w2occ.findNext();
-                }
+            l1 = w1occ.retrieve().getLine();
+            p1 = w1occ.retrieve().getPosition();
+            if(!w1occ.last())
                 w1occ.findNext();
-            }
+            w2occ.findFirst();
+            l2 = w2occ.retrieve().getLine();
+            p2 = w2occ.retrieve().getPosition();
+            if(!w2occ.last())
+                w2occ.findNext();
 
 
+            while(!w1occ.last() || !w2occ.last()){
+                if(l1 == l2){
+                    if(Math.abs(p1 - p2) == 1)
+                        return true;
+                }
+                if((l2 > l1 || p2 > p1) && !w1occ.last()){
+                    w1occ.findNext();
+                    l1 = w1occ.retrieve().getLine();
+                    p1 = w1occ.retrieve().getPosition();
+                }
+                if(!(l2 > l1 || p2 > p1) && !w2occ.last()){
+                    w2occ.findNext();
+                    l2 = w2occ.retrieve().getLine();
+                    p2 = w2occ.retrieve().getPosition();
+                }
+            }       
+            return false;     
+        }
 
-        return false;
-    }
+
 
     void printArray(){
         System.out.println("Print Method");
@@ -251,8 +232,9 @@ class ArrayOfLengths{
             }
         }
         System.out.println("-------------------------------");
+
         System.out.println("test adjacent Method");
-        System.out.println("word1 = operations, word2 = or result: " + checkAdjacent("operations", "or"));
+        System.out.println("word1 = operations, word2 = or result: " + checkAdjacent("science", "computer"));
 
 
     }
