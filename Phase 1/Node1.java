@@ -1,13 +1,13 @@
-class Node {
+class Node1 {
     String data;
-    Node next;
+    Node1 next;
     int line;
     int position;
     int length;
     boolean unique;
     int occurrence;
 
-    Node(String data, int line, int position, int length) {
+    Node1(String data, int line, int position, int length) {
         this.data = data;
         next = null;
         this.line = line;
@@ -16,10 +16,10 @@ class Node {
         unique = true;
         occurrence = 0;
     }
-    boolean equals(Node other){
+    boolean equals(Node1 other){
         return(data.equalsIgnoreCase(other.data));
     }
-    boolean same(Node other){
+    boolean same(Node1 other){
         return ((line == other.line) && (position == other.position));
     }
     void print(){

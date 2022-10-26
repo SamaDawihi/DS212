@@ -1,14 +1,14 @@
 import java.io.*;
 import java.util.Scanner;
 
-public class LinkedList {
-    private Node head;
-    private Node current;
+public class LinkedList1 {
+    private Node1 head;
+    private Node1 current;
     private int length; //عدد الكلمات
-    private Node[] sorted;
+    private Node1[] sorted;
     private int maxOccurrence;
 
-    LinkedList(String path){
+    LinkedList1(String path){
         addFile(path);
         calculateOccurrence();
         sortedArray();
@@ -71,17 +71,17 @@ public class LinkedList {
     
     void insert(String word, int line, int position){
         if (head == null){
-            head = new Node(word, line, position, word.length());
+            head = new Node1(word, line, position, word.length());
             current = head;
         }else{
-            current.next = new Node(word, line, position, word.length());
+            current.next = new Node1(word, line, position, word.length());
             current = current.next;
         }
         length++;
     }
 
     void calculateOccurrence(){
-        Node temp;
+        Node1 temp;
         maxOccurrence = 1;
         current = head;
         for(int i=0; i< length; i++){  //نمشي على عدد النودز
@@ -102,7 +102,7 @@ public class LinkedList {
     }
     
     void sortedArray(){ //add unique nodes sorted by occurrence in sorted array
-        sorted = new Node[uniqueWordsNumber()];
+        sorted = new Node1[uniqueWordsNumber()];
         int max = maxOccurrence;
         int i = 0;
         while (max > 0){ // big oh (n) * max occurrence ==> n^2
@@ -187,7 +187,7 @@ public class LinkedList {
 
     String location(String word){ //Operation 6 // big oh (n)
         String s = "" ; 
-        Node p = head ; 
+        Node1 p = head ; 
         int a=0; 
         int z =occurrenceNumber(word); 
     
@@ -201,7 +201,7 @@ public class LinkedList {
     }
  
     boolean isAdjacent(String word1, String word2){ //Operation 7 // big oh (n)
-        Node p =head , q = head;
+        Node1 p =head , q = head;
         for (int i = 0 ; i < length - 1 ; i++){
             if (p.data.equalsIgnoreCase(word1)){
                 q = p.next;
