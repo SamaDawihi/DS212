@@ -170,9 +170,8 @@ class ArrayOfLengths{
     int totalWordsForLength(int l){//(4) RANA returns word list in an index l 
 
         int i = arrayOfDifferentLengths[l].retrieve().getSize();
-        return i ; 
+        return i ; } 
 
-    }
 
     boolean checkAdjacent(String w1, String w2){
             if(arrayOfDifferentLengths[w1.length()].empty() || arrayOfDifferentLengths[w2.length()].empty())// check not empty()
