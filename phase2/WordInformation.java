@@ -35,4 +35,9 @@ class WordInformation{
         }
     }
 
+
+    int getSize()
+    {
+        return this.size ; 
+    }
 }

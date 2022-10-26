@@ -141,9 +141,36 @@ class ArrayOfLengths{
     int uniqueWords(){//unique words number
         return uniqueWords;
     }
-    void totalWord(String s){//occurences of word s
+
+    LinkedList<WordOccurrence> occurrences(String s){//(6) RANA returns list of occurences of word s RANA
+
+            LinkedList<WordOccurrence> occlist = null ;
+            int l = s.length(); 
+
+            if (!arrayOfDifferentLengths[l].empty()) // if ( arrayOfDifferentLengths[l].getsize() > 0)
+            {
+
+                while(!arrayOfDifferentLengths[1].last())
+                {
+                    if (arrayOfDifferentLengths[1].retrieve().word.equalsIgnoreCase(s))
+                    occlist = arrayOfDifferentLengths[1].retrieve().occList ; 
+
+                    arrayOfDifferentLengths[1].findNext();
+                }
+
+                if (arrayOfDifferentLengths[1].retrieve().word.equalsIgnoreCase(s))
+                occlist = arrayOfDifferentLengths[1].retrieve().occList ; 
+            }
+
+
+             return occlist;
     }
-    void totalWordsForLength(int l){//
+
+
+    int totalWordsForLength(int l){//(4) RANA returns word list in an index l 
+
+        int i = arrayOfDifferentLengths[l].retrieve().getSize();
+        return i ; 
 
     }
 
