@@ -4,6 +4,5 @@ class testArrayOfLengths{
         arr.printArray();
         System.out.println("word1 = 'data', word2 = 'values' result: " + arr.checkAdjacent("functions", "the"));
         System.out.println("END");
-
     }
 }

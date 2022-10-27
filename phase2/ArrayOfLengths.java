@@ -1,5 +1,7 @@
 import java.io.*;
+import java.util.Scanner;
 class ArrayOfLengths{
+    Scanner input = new Scanner(System.in);
     int wordsNumber;
     int uniqueWords;
     LinkedList<WordInformation>[] arrayOfDifferentLengths;
@@ -256,9 +258,12 @@ class ArrayOfLengths{
             }
         }
         System.out.println("**************");
-        for (int i=0 ; i<uniqueWords ; i++){
-            sortedArray[i].printInfo();
-        }
+        displayUniqueWords();
+        System.out.println("**************");
+        System.out.println("enter a word you want it number of occurrences:");
+        String str = input.next();
+        System.out.println(totalWords(str));
+        System.out.println("**************");
         System.out.println("-------------------------------");
         LinkedList<WordOccurrence> occlist = occurrences("data");
         occlist.findFirst();
@@ -267,9 +272,25 @@ class ArrayOfLengths{
             occlist.findNext();
         }
         System.out.println("test adjacent Method");
-        
-
-
     }
+        int totalWords(String s){
+            if (!arrayOfDifferentLengths[s.length()].empty()){
+            arrayOfDifferentLengths[s.length()].findFirst();
+            while (!arrayOfDifferentLengths[s.length()].last()){
+                if (arrayOfDifferentLengths[s.length()].retrieve().word.equalsIgnoreCase(s))
+                    return arrayOfDifferentLengths[s.length()].retrieve().size;
+                    arrayOfDifferentLengths[s.length()].findNext();
+            }
+            if (arrayOfDifferentLengths[s.length()].retrieve().word.equalsIgnoreCase(s)) //last
+                    return arrayOfDifferentLengths[s.length()].retrieve().size;
+        }
+        return 0 ;
+        }
 
+        void displayUniqueWords (){
+            for (int i=0 ; i<uniqueWords-1 ; i++){
+                System.out.print("("+sortedArray[i].word+","+sortedArray[i].size+"),");
+            }
+            System.out.println("("+sortedArray[uniqueWords-1].word+","+sortedArray[uniqueWords-1].size+")");
+        }
 }
