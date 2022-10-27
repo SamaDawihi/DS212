@@ -3,7 +3,7 @@ class ArrayOfLengths{
     int wordsNumber;
     int uniqueWords;
     LinkedList<WordInformation>[] arrayOfDifferentLengths;
-    
+
 
     ArrayOfLengths(String f){
         arrayOfDifferentLengths = (LinkedList<WordInformation>[]) new LinkedList<?>[25];
@@ -190,31 +190,33 @@ class ArrayOfLengths{
             w1occ.findFirst();
             l1 = w1occ.retrieve().getLine();
             p1 = w1occ.retrieve().getPosition();
-            if(!w1occ.last())
-                w1occ.findNext();
+            
             w2occ.findFirst();
             l2 = w2occ.retrieve().getLine();
             p2 = w2occ.retrieve().getPosition();
-            if(!w2occ.last())
-                w2occ.findNext();
 
 
             while(!w1occ.last() || !w2occ.last()){
-                if(l1 == l2){
-                    if(Math.abs(p1 - p2) == 1)
-                        return true;
-                }
-                if((l2 > l1 || p2 > p1) && !w1occ.last()){
+
+                if(l1 == l2 && Math.abs(p1 - p2) == 1)
+                    return true;
+                
+                if((w2occ.last() || l2 > l1 || p2 > p1) && !w1occ.last()){
                     w1occ.findNext();
                     l1 = w1occ.retrieve().getLine();
                     p1 = w1occ.retrieve().getPosition();
                 }
-                if(!(l2 > l1 || p2 > p1) && !w2occ.last()){
+                
+                if((w1occ.last() ||( l2 <= l1 && p2 <= p1)) && !w2occ.last()){
                     w2occ.findNext();
                     l2 = w2occ.retrieve().getLine();
                     p2 = w2occ.retrieve().getPosition();
                 }
-            }       
+            }
+            if(l1 == l2){
+                if(Math.abs(p1 - p2) == 1)
+                    return true;
+            }
             return false;     
         }
 
@@ -243,9 +245,8 @@ class ArrayOfLengths{
             occlist.retrieve().printOcc();
             occlist.findNext();
         }
-        occlist.retrieve().printOcc();
-        //System.out.println("test adjacent Method");
-        //System.out.println("word1 = operations, word2 = or result: " + checkAdjacent("science", "computer"));
+        System.out.println("test adjacent Method");
+        
 
 
     }

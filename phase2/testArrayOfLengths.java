@@ -1,8 +1,8 @@
 class testArrayOfLengths{
     public static void main(String[] args) {
-        ArrayOfLengths shk = new ArrayOfLengths("file2.txt");
-        shk.printArray();
-        System.out.println("total words: " + shk.totalWordsForLength(1));
+        ArrayOfLengths arr = new ArrayOfLengths("file2.txt");
+        arr.printArray();
+        System.out.println("word1 = 'data', word2 = 'values' result: " + arr.checkAdjacent("functions", "the"));
         System.out.println("END");
 
     }
