@@ -3,15 +3,16 @@ class ArrayOfLengths{
     int wordsNumber;
     int uniqueWords;
     LinkedList<WordInformation>[] arrayOfDifferentLengths;
-
+    WordInformation[] sortedArray;
 
     ArrayOfLengths(String f){
-        arrayOfDifferentLengths = (LinkedList<WordInformation>[]) new LinkedList<?>[25];
+        arrayOfDifferentLengths = (LinkedList<WordInformation>[]) new LinkedList[25];
         for(int i = 0; i < 25; i++){
             arrayOfDifferentLengths[i] = new LinkedList<WordInformation>();
         }
         wordsNumber = 0;
         uniqueWords = 0;
+        sortedArray = new WordInformation[50];
         readFileAndAnalyse(f);
     }
     void readFileAndAnalyse(String f){
@@ -23,35 +24,37 @@ class ArrayOfLengths{
         try{
             File file = new File(f);
             FileReader reader = new FileReader(file);
-            BufferedReader reader2 = new BufferedReader(reader); //
+            BufferedReader reader2 = new BufferedReader(reader); 
             try{
                 while(true){
                     if (!word.equals("")){ 
                         boolean exists = false;
-                        if(!arrayOfDifferentLengths[word.length()].empty()){
+                        if(!arrayOfDifferentLengths[word.length()].empty()){ //not the first word of that length
                             arrayOfDifferentLengths[word.length()].findFirst();
                             while(!arrayOfDifferentLengths[word.length()].last()){
-                            String s = arrayOfDifferentLengths[word.length()].retrieve().getWord();
+                            String s = arrayOfDifferentLengths[word.length()].retrieve().getWord(); //is it exist before
                                 if(s.equalsIgnoreCase(word)){
                                     arrayOfDifferentLengths[word.length()].retrieve().addOccurrence(lineNo,position);
                                     exists = true;
-                                    break;
+                                    break; //from while last
                                 }
                                 arrayOfDifferentLengths[word.length()].findNext();
                             }
-                            if(!exists && arrayOfDifferentLengths[word.length()].retrieve().getWord().equalsIgnoreCase(word)){
+                            if(!exists && arrayOfDifferentLengths[word.length()].retrieve().getWord().equalsIgnoreCase(word)){ //test the last word
                                 arrayOfDifferentLengths[word.length()].retrieve().addOccurrence(lineNo,position);
                                 exists = true;
                             }
                         }
                         if(!exists){
-                            arrayOfDifferentLengths[word.length()].insert(new WordInformation(word, lineNo, position));
+                            WordInformation tmp = new WordInformation(word, lineNo, position);
+                            arrayOfDifferentLengths[word.length()].insert(tmp);
+                            sortedArray[uniqueWords] = tmp;
                             uniqueWords++;
                         }
                         position++;
                         wordsNumber++;
                         word = "";
-                    }
+                    } //end if word not 
                     
                     str = reader2.readLine();
                     if(str == null) break; 
@@ -83,28 +86,30 @@ class ArrayOfLengths{
                                 }
                             }
                             if (!exists){
-                                arrayOfDifferentLengths[word.length()].insert(new WordInformation(word, lineNo, position));
+                                WordInformation tmp = new WordInformation(word, lineNo, position);
+                                arrayOfDifferentLengths[word.length()].insert(tmp);
+                                sortedArray[uniqueWords] = tmp;
                                 uniqueWords++;
                             }
                             position++;
                             wordsNumber++;
-                            word = "";
+                            word ="" ;
                         }
                         
-                        else if ((i != str.length() -1)&&(i != 0)){//يشيك ان مب بدايةالسطر او نهايتها
-                            if((Character.isLetter(str.charAt(i+1))) && (Character.isLetter(str.charAt(i-1)))) //اذا بداية الكلمة قبلها سبيس
+                        else if ((i != str.length() -1)&&(i != 0)){
+                            if((Character.isLetter(str.charAt(i+1))) && (Character.isLetter(str.charAt(i-1)))) 
                                 word += str.charAt(i);
                         }
                     }
                 }
             }catch(EOFException ex){
-                System.out.println("Error: "+ ex);
+                System.out.println("Error" + ex);
             }
             reader2.close();
         }catch (IOException e){
-            System.out.println("Error: "+ e);
+            System.out.println("Error" + e);
         }catch (Exception e){
-            System.out.println("Error: "+ e);
+            System.out.println("Error" + e);
         }
         
         if (!word.equals("")){ 
@@ -126,14 +131,26 @@ class ArrayOfLengths{
                 }
             }
             if (!exists){
-                arrayOfDifferentLengths[word.length()].insert(new WordInformation(word, lineNo, position));
+                WordInformation tmp = new WordInformation(word, lineNo, position);
+                arrayOfDifferentLengths[word.length()].insert(tmp);
+                sortedArray[uniqueWords] = tmp;
                 uniqueWords++;
             }
             position++;
             wordsNumber++;
-            word = "";
+            word ="" ;
         }
-    }
+        for (int i=0 ; i<uniqueWords-1; i++){
+            int max = i;
+            for (int j=i+1 ; j<uniqueWords; j++){
+                if (sortedArray[j].size > sortedArray[max].size)
+                max = j;
+            }
+            WordInformation tmp = sortedArray[i];
+            sortedArray[i] = sortedArray[max];
+            sortedArray[max] = tmp;
+        }
+    }//end readFileAndAnalyse(f)
     int documentLength(){//words number
         return wordsNumber;
     }
@@ -237,6 +254,10 @@ class ArrayOfLengths{
                 arrayOfDifferentLengths[i].retrieve().printInfo();
                 System.out.println("-------------------------------");
             }
+        }
+        System.out.println("**************");
+        for (int i=0 ; i<uniqueWords ; i++){
+            sortedArray[i].printInfo();
         }
         System.out.println("-------------------------------");
         LinkedList<WordOccurrence> occlist = occurrences("data");
