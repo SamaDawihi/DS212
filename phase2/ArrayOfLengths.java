@@ -3,6 +3,7 @@ class ArrayOfLengths{
     int wordsNumber;
     int uniqueWords;
     LinkedList<WordInformation>[] arrayOfDifferentLengths;
+    
 
     ArrayOfLengths(String f){
         arrayOfDifferentLengths = (LinkedList<WordInformation>[]) new LinkedList<?>[25];
@@ -144,32 +145,36 @@ class ArrayOfLengths{
 
     LinkedList<WordOccurrence> occurrences(String s){//(6) RANA returns list of occurences of word s RANA
 
-            LinkedList<WordOccurrence> occlist = null ;
+            LinkedList<WordOccurrence> occlist = null;
             int l = s.length(); 
 
-            if (!arrayOfDifferentLengths[l].empty()) // if ( arrayOfDifferentLengths[l].getsize() > 0)
+            if (!arrayOfDifferentLengths[l].empty()) 
             {
-
+                arrayOfDifferentLengths[l].findFirst();
                 while(!arrayOfDifferentLengths[l].last())
                 {
-                    if (arrayOfDifferentLengths[l].retrieve().word.equalsIgnoreCase(s))
-                    occlist = arrayOfDifferentLengths[l].retrieve().occList ; 
-
+                    if (arrayOfDifferentLengths[l].retrieve().getWord().equalsIgnoreCase(s))
+                        occlist = arrayOfDifferentLengths[l].retrieve().getOccList() ; 
                     arrayOfDifferentLengths[l].findNext();
                 }
 
-                if (arrayOfDifferentLengths[l].retrieve().word.equalsIgnoreCase(s))
-                    occlist = arrayOfDifferentLengths[l].retrieve().occList ; 
+                if (arrayOfDifferentLengths[l].retrieve().getWord().equalsIgnoreCase(s))
+                    occlist = arrayOfDifferentLengths[l].retrieve().getOccList() ; 
             }
-
-
              return occlist;
     }
 
 
     int totalWordsForLength(int l){//(4) RANA returns word list in an index l 
-
-        int i = arrayOfDifferentLengths[l].retrieve().getSize();
+        int i = 0;
+        if(!arrayOfDifferentLengths[l].empty()){
+            i = 1; 
+            arrayOfDifferentLengths[l].findFirst();
+            while(!arrayOfDifferentLengths[l].last()){
+                i++;
+                arrayOfDifferentLengths[l].findNext();
+            }
+        }
         return i ; 
     } 
 
@@ -232,9 +237,15 @@ class ArrayOfLengths{
             }
         }
         System.out.println("-------------------------------");
-
-        System.out.println("test adjacent Method");
-        System.out.println("word1 = operations, word2 = or result: " + checkAdjacent("science", "computer"));
+        LinkedList<WordOccurrence> occlist = occurrences("data");
+        occlist.findFirst();
+        while(!occlist.last()){
+            occlist.retrieve().printOcc();
+            occlist.findNext();
+        }
+        occlist.retrieve().printOcc();
+        //System.out.println("test adjacent Method");
+        //System.out.println("word1 = operations, word2 = or result: " + checkAdjacent("science", "computer"));
 
 
     }
