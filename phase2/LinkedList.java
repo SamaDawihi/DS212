@@ -2,13 +2,18 @@
 class LinkedList<T> implements List<T>{
     private Node<T> head;
     private Node<T> current;
+    int size;
 
     LinkedList(){
         head = current = null;
+        size = 0;
     }
     
     public boolean empty() {
         return head == null;
+    }
+    int length() {
+        return size;
     }
     
     public boolean last() {
@@ -51,6 +56,7 @@ class LinkedList<T> implements List<T>{
             current = current.next;
             current.next = node;   
         }
+        size++;
     }
     public void remove() {
         if(current == head){

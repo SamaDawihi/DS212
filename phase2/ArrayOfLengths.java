@@ -153,16 +153,53 @@ class ArrayOfLengths{
             sortedArray[max] = tmp;
         }
     }//end readFileAndAnalyse(f)
-    int documentLength(){//words number
+    
+    int documentLength(){//Operation(1) O(1)
         return wordsNumber;
     }
 
 
-    int uniqueWords(){//unique words number
+    int uniqueWords(){//unique words number //Operation(2) O(1)
         return uniqueWords;
     }
 
-    LinkedList<WordOccurrence> occurrences(String s){//(6) RANA returns list of occurences of word s RANA
+    
+    int totalWords(String s){ //Operation(3) case1: O(m/k) or case2: O(m),O(n)
+        if (!arrayOfDifferentLengths[s.length()].empty()){
+        arrayOfDifferentLengths[s.length()].findFirst();
+        while (!arrayOfDifferentLengths[s.length()].last()){
+            if (arrayOfDifferentLengths[s.length()].retrieve().word.equalsIgnoreCase(s))
+                return arrayOfDifferentLengths[s.length()].retrieve().size;
+                arrayOfDifferentLengths[s.length()].findNext();
+        }
+        if (arrayOfDifferentLengths[s.length()].retrieve().word.equalsIgnoreCase(s)) //last
+                return arrayOfDifferentLengths[s.length()].retrieve().size;
+    }
+    return 0 ;
+    }
+
+    int totalWordsForLength(int l){//Operation(4) O(1) 
+        /* 
+        int i = 0;
+        if(!arrayOfDifferentLengths[l].empty()){
+            i = 1; 
+            arrayOfDifferentLengths[l].findFirst();
+            while(!arrayOfDifferentLengths[l].last()){
+                i++;
+                arrayOfDifferentLengths[l].findNext();
+            }
+        }*/
+        return arrayOfDifferentLengths[l].length() ; 
+    } 
+
+    void displayUniqueWords (){//Operation(5) O(m)
+        for (int i=0 ; i<uniqueWords-1 ; i++){
+            System.out.print("("+sortedArray[i].word+","+sortedArray[i].size+"),");
+        }
+        System.out.println("("+sortedArray[uniqueWords-1].word+","+sortedArray[uniqueWords-1].size+")");
+    }
+
+    LinkedList<WordOccurrence> occurrences(String s){//Operation(6) O(n)
 
             LinkedList<WordOccurrence> occlist = null;
             int l = s.length(); 
@@ -183,22 +220,7 @@ class ArrayOfLengths{
              return occlist;
     }
 
-
-    int totalWordsForLength(int l){//(4) RANA returns word list in an index l 
-        int i = 0;
-        if(!arrayOfDifferentLengths[l].empty()){
-            i = 1; 
-            arrayOfDifferentLengths[l].findFirst();
-            while(!arrayOfDifferentLengths[l].last()){
-                i++;
-                arrayOfDifferentLengths[l].findNext();
-            }
-        }
-        return i ; 
-    } 
-
-
-    boolean checkAdjacent(String w1, String w2){
+    boolean checkAdjacent(String w1, String w2){//Operation(7) O(n)
             if(arrayOfDifferentLengths[w1.length()].empty() || arrayOfDifferentLengths[w2.length()].empty())// check not empty()
                 return false;
             LinkedList<WordOccurrence> w1occ = occurrences(w1); //temp list to store word 1&2 occurrences
@@ -232,14 +254,12 @@ class ArrayOfLengths{
                     p2 = w2occ.retrieve().getPosition();
                 }
             }
-            if(l1 == l2){
-                if(Math.abs(p1 - p2) == 1)
-                    return true;
-            }
+            if(l1 == l2 && Math.abs(p1 - p2) == 1)
+                return true;
+            
             return false;     
         }
-
-
+    
 
     void printArray(){
         System.out.println("words: " + documentLength() + " unique words: " + uniqueWords());
@@ -259,11 +279,13 @@ class ArrayOfLengths{
         str = input.next();
         LinkedList<WordOccurrence> occlist = occurrences(str);
         if (occlist!=null){
-        occlist.findFirst();
-        while(!occlist.last()){
+            occlist.findFirst();
+            while(!occlist.last()){
+                occlist.retrieve().printOcc();
+                occlist.findNext();
+            }
             occlist.retrieve().printOcc();
-            occlist.findNext();
-        }}
+        }
         else
         System.out.println("not found");
         System.out.println("**************");
@@ -271,25 +293,5 @@ class ArrayOfLengths{
         String s1 = input.next(); String s2 = input.next();
         System.out.println(checkAdjacent(s1,s2));
     }//end print 
-    
-        int totalWords(String s){
-            if (!arrayOfDifferentLengths[s.length()].empty()){
-            arrayOfDifferentLengths[s.length()].findFirst();
-            while (!arrayOfDifferentLengths[s.length()].last()){
-                if (arrayOfDifferentLengths[s.length()].retrieve().word.equalsIgnoreCase(s))
-                    return arrayOfDifferentLengths[s.length()].retrieve().size;
-                    arrayOfDifferentLengths[s.length()].findNext();
-            }
-            if (arrayOfDifferentLengths[s.length()].retrieve().word.equalsIgnoreCase(s)) //last
-                    return arrayOfDifferentLengths[s.length()].retrieve().size;
-        }
-        return 0 ;
-        }
-
-        void displayUniqueWords (){
-            for (int i=0 ; i<uniqueWords-1 ; i++){
-                System.out.print("("+sortedArray[i].word+","+sortedArray[i].size+"),");
-            }
-            System.out.println("("+sortedArray[uniqueWords-1].word+","+sortedArray[uniqueWords-1].size+")");
-        }
+      
 }
