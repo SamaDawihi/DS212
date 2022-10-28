@@ -14,7 +14,6 @@ class ArrayOfLengths{
         }
         wordsNumber = 0;
         uniqueWords = 0;
-        sortedArray = new WordInformation[50];
         readFileAndAnalyse(f);
     }
     void readFileAndAnalyse(String f){
@@ -50,7 +49,6 @@ class ArrayOfLengths{
                         if(!exists){
                             WordInformation tmp = new WordInformation(word, lineNo, position);
                             arrayOfDifferentLengths[word.length()].insert(tmp);
-                            sortedArray[uniqueWords] = tmp;
                             uniqueWords++;
                         }
                         position++;
@@ -90,7 +88,6 @@ class ArrayOfLengths{
                             if (!exists){
                                 WordInformation tmp = new WordInformation(word, lineNo, position);
                                 arrayOfDifferentLengths[word.length()].insert(tmp);
-                                sortedArray[uniqueWords] = tmp;
                                 uniqueWords++;
                             }
                             position++;
@@ -135,16 +132,29 @@ class ArrayOfLengths{
             if (!exists){
                 WordInformation tmp = new WordInformation(word, lineNo, position);
                 arrayOfDifferentLengths[word.length()].insert(tmp);
-                sortedArray[uniqueWords] = tmp;
                 uniqueWords++;
             }
             position++;
             wordsNumber++;
             word ="" ;
         }
-        for (int i=0 ; i<uniqueWords-1; i++){
+        sortedArray = new WordInformation[uniqueWords];
+
+        int index=0; 
+        for (int i=0; i<arrayOfDifferentLengths.length;i++){
+            if(!arrayOfDifferentLengths[i].empty()){
+            arrayOfDifferentLengths[i].findFirst();
+            while(!arrayOfDifferentLengths[i].last()){
+                sortedArray[index++] = arrayOfDifferentLengths[i].retrieve();
+                arrayOfDifferentLengths[i].findNext();
+            }
+            sortedArray[index++]= arrayOfDifferentLengths[i].retrieve();
+        }//end if 
+        }//end for 
+
+        for (int i=0 ; i<sortedArray.length-1; i++){
             int max = i;
-            for (int j=i+1 ; j<uniqueWords; j++){
+            for (int j=i+1 ; j<sortedArray.length; j++){
                 if (sortedArray[j].size > sortedArray[max].size)
                 max = j;
             }
