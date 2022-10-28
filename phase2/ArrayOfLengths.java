@@ -15,7 +15,7 @@ class ArrayOfLengths{
         wordsNumber = 0;
         uniqueWords = 0;
         readFileAndAnalyse(f);
-    }
+    }   
     void readFileAndAnalyse(String f){
         int lineNo = 0;
         int position = 0;
@@ -140,8 +140,8 @@ class ArrayOfLengths{
         }
         sortedArray = new WordInformation[uniqueWords];
 
-        int index=0; 
-        for (int i=0; i<arrayOfDifferentLengths.length;i++){
+        int index = 0; 
+        for (int i=0; i<arrayOfDifferentLengths.length;i++){// add words to sorted
             if(!arrayOfDifferentLengths[i].empty()){
             arrayOfDifferentLengths[i].findFirst();
             while(!arrayOfDifferentLengths[i].last()){
@@ -152,7 +152,7 @@ class ArrayOfLengths{
         }//end if 
         }//end for 
 
-        for (int i=0 ; i<sortedArray.length-1; i++){
+        for (int i=0 ; i<sortedArray.length-1; i++){// sort sorted
             int max = i;
             for (int j=i+1 ; j<sortedArray.length; j++){
                 if (sortedArray[j].size > sortedArray[max].size)
@@ -168,11 +168,9 @@ class ArrayOfLengths{
         return wordsNumber;
     }
 
-
     int uniqueWords(){//unique words number //Operation(2) O(1)
         return uniqueWords;
     }
-
     
     int totalWords(String s){ //Operation(3) case1: O(m/k) or case2: O(m),O(n)
         if (!arrayOfDifferentLengths[s.length()].empty()){
@@ -184,26 +182,17 @@ class ArrayOfLengths{
         }
         if (arrayOfDifferentLengths[s.length()].retrieve().word.equalsIgnoreCase(s)) //last
                 return arrayOfDifferentLengths[s.length()].retrieve().size;
-    }
+        }
     return 0 ;
     }
 
     int totalWordsForLength(int l){//Operation(4) O(1) 
-        /* 
-        int i = 0;
-        if(!arrayOfDifferentLengths[l].empty()){
-            i = 1; 
-            arrayOfDifferentLengths[l].findFirst();
-            while(!arrayOfDifferentLengths[l].last()){
-                i++;
-                arrayOfDifferentLengths[l].findNext();
-            }
-        }*/
+        
         return arrayOfDifferentLengths[l].length() ; 
     } 
 
     void displayUniqueWords (){//Operation(5) O(m)
-        for (int i=0 ; i<uniqueWords-1 ; i++){
+        for (int i=0 ; i < uniqueWords-1 ; i++){
             System.out.print("("+sortedArray[i].word+","+sortedArray[i].size+"),");
         }
         System.out.println("("+sortedArray[uniqueWords-1].word+","+sortedArray[uniqueWords-1].size+")");
