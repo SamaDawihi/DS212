@@ -242,37 +242,36 @@ class ArrayOfLengths{
 
 
     void printArray(){
-        System.out.println("Print Method");
         System.out.println("words: " + documentLength() + " unique words: " + uniqueWords());
-        for(int i=1; i<12; i++){
-            if(!arrayOfDifferentLengths[i].empty()){
-                arrayOfDifferentLengths[i].findFirst();
-                System.out.println("------index: " + i + " ------");
-                while(!arrayOfDifferentLengths[i].last()){
-                    arrayOfDifferentLengths[i].retrieve().printInfo();
-                    System.out.println("-------------------------------");
-                    arrayOfDifferentLengths[i].findNext();
-                }
-                arrayOfDifferentLengths[i].retrieve().printInfo();
-                System.out.println("-------------------------------");
-            }
-        }
         System.out.println("**************");
+        System.out.println("unique word with occurrences from most to least:");
         displayUniqueWords();
         System.out.println("**************");
         System.out.println("enter a word you want it number of occurrences:");
         String str = input.next();
         System.out.println(totalWords(str));
         System.out.println("**************");
-        System.out.println("-------------------------------");
-        LinkedList<WordOccurrence> occlist = occurrences("data");
+        System.out.println("enter a length to display the number of words of that length:");
+        int len = input.nextInt();
+        System.out.println(totalWordsForLength(len));
+        System.out.println("**************");
+        System.out.println("enter a word to know the locations of its occurrences:");
+        str = input.next();
+        LinkedList<WordOccurrence> occlist = occurrences(str);
+        if (occlist!=null){
         occlist.findFirst();
         while(!occlist.last()){
             occlist.retrieve().printOcc();
             occlist.findNext();
-        }
-        System.out.println("test adjacent Method");
-    }
+        }}
+        else
+        System.out.println("not found");
+        System.out.println("**************");
+        System.out.println("test if two words are adjecent:");
+        String s1 = input.next(); String s2 = input.next();
+        System.out.println(checkAdjacent(s1,s2));
+    }//end print 
+    
         int totalWords(String s){
             if (!arrayOfDifferentLengths[s.length()].empty()){
             arrayOfDifferentLengths[s.length()].findFirst();
