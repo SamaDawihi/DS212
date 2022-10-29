@@ -1,0 +1,2 @@
+Tree height it is measured from Leaf Node to Root Node, in upward direction.
+Tree depth it is measured from Root Node to Leaf Node in downward direction.

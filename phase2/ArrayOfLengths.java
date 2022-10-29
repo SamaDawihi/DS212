@@ -68,31 +68,33 @@ class ArrayOfLengths{
                         }
 
                         else if(Character.isWhitespace(str.charAt(i))){
-                            boolean exists = false;
-                            if(!arrayOfDifferentLengths[word.length()].empty()){
-                                arrayOfDifferentLengths[word.length()].findFirst();
-                                while(!arrayOfDifferentLengths[word.length()].last()){
-                                    String s = arrayOfDifferentLengths[word.length()].retrieve().getWord();
-                                    if(s.equalsIgnoreCase(word)){
+                            if(word != ""){
+                                boolean exists = false;
+                                if(!arrayOfDifferentLengths[word.length()].empty()){
+                                    arrayOfDifferentLengths[word.length()].findFirst();
+                                    while(!arrayOfDifferentLengths[word.length()].last()){
+                                        String s = arrayOfDifferentLengths[word.length()].retrieve().getWord();
+                                        if(s.equalsIgnoreCase(word)){
+                                            arrayOfDifferentLengths[word.length()].retrieve().addOccurrence(lineNo,position);
+                                            exists = true;
+                                            break;
+                                        }
+                                        arrayOfDifferentLengths[word.length()].findNext();
+                                    }
+                                    if(!exists && arrayOfDifferentLengths[word.length()].retrieve().getWord().equalsIgnoreCase(word)){
                                         arrayOfDifferentLengths[word.length()].retrieve().addOccurrence(lineNo,position);
                                         exists = true;
-                                        break;
                                     }
-                                    arrayOfDifferentLengths[word.length()].findNext();
                                 }
-                                if(!exists && arrayOfDifferentLengths[word.length()].retrieve().getWord().equalsIgnoreCase(word)){
-                                    arrayOfDifferentLengths[word.length()].retrieve().addOccurrence(lineNo,position);
-                                    exists = true;
+                                if (!exists){
+                                    WordInformation tmp = new WordInformation(word, lineNo, position);
+                                    arrayOfDifferentLengths[word.length()].insert(tmp);
+                                    uniqueWords++;
                                 }
+                                position++;
+                                wordsNumber++;
+                                word ="" ;
                             }
-                            if (!exists){
-                                WordInformation tmp = new WordInformation(word, lineNo, position);
-                                arrayOfDifferentLengths[word.length()].insert(tmp);
-                                uniqueWords++;
-                            }
-                            position++;
-                            wordsNumber++;
-                            word ="" ;
                         }
                         
                         else if ((i != str.length() -1)&&(i != 0)){
